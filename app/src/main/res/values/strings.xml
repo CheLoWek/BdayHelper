@@ -4,4 +4,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_search">Search</string>
+
+    <string name="menu_item_add_contact">Add contact</string>
 </resources>
