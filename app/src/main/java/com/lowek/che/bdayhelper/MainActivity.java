@@ -1,13 +1,17 @@
 package com.lowek.che.bdayhelper;
 
+import android.content.res.Resources;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.lowek.che.bdayhelper.fragment.RecyclerviewFragment;
+
 public class MainActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_main;
+    public static Resources applicationResources;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -21,6 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
         initNavigationView();
+        initFragment();
+
+        applicationResources = getResources();
+    }
+
+    private void initFragment() {
+        if (findViewById(R.id.contentFrame) != null) {
+            RecyclerviewFragment recyclerviewFragment = new RecyclerviewFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.contentFrame, recyclerviewFragment)
+                    .commit();
+        }
     }
 
     private void initToolbar() {

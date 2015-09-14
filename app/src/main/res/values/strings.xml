@@ -5,4 +5,37 @@
     <string name="action_search">Search</string>
 
     <string name="menu_item_add_contact">Add contact</string>
+    <string name="birth_day">Birthday</string>
+
+    <!-- months -->
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <!-- days of week -->
+    <string-array name="days_of_week">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <string name="in">in</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="days2">days</string>
 </resources>

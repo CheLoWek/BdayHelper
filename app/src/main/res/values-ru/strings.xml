@@ -6,4 +6,37 @@
     <string name="action_search">Поиск</string>
 
     <string name="menu_item_add_contact">Добавить контакт</string>
+    <string name="birth_day">День рождения</string>
+
+    <!-- месяцы -->
+    <string-array name="months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+
+    <!-- дни -->
+    <string-array name="days_of_week">
+        <item>воскресенье</item>
+        <item>понедельник</item>
+        <item>вторник</item>
+        <item>среда</item>
+        <item>четверг</item>
+        <item>пятница</item>
+        <item>суббота</item>
+    </string-array>
+
+    <string name="in">через</string>
+    <string name="day">день</string>
+    <string name="days">дней</string>
+    <string name="days2">дня</string>
 </resources>
