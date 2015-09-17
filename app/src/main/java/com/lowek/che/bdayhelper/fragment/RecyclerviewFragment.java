@@ -25,7 +25,11 @@ public class RecyclerviewFragment extends Fragment {
     private FloatingActionButton fab;
     private View view;
 
-    public RecyclerviewFragment() {
+    public static RecyclerviewFragment getInstance(){
+        Bundle args = new Bundle();
+        RecyclerviewFragment fragment = new RecyclerviewFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
@@ -45,18 +49,18 @@ public class RecyclerviewFragment extends Fragment {
         adapter = new CardAdapter();
         recyclerView.setAdapter(adapter);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.events_list_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //fab clicked
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentFrame, new RecyclerviewFragment())
-                        .addToBackStack(null)
-                        .commit();
-                getActivity().getSupportFragmentManager().executePendingTransactions();
-            }
-        });
+//        fab = (FloatingActionButton) view.findViewById(R.id.events_list_fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //fab clicked
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.contentFrame, new RecyclerviewFragment())
+//                        .addToBackStack(null)
+//                        .commit();
+//                getActivity().getSupportFragmentManager().executePendingTransactions();
+//            }
+//        });
         return view;
     }
 }
