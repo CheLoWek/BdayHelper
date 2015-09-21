@@ -17,6 +17,10 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
                 "ALL",
                 "VK",
                 "FACEBOOK"
+//                "tab1",
+//                "tab2",
+//                "tab3",
+//                "tab4"
         };
     }
 
