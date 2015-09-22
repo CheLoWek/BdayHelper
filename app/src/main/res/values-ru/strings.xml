@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BDayHelper Beta</string>
+
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_add_contact">Добавить контакт</string>
 
     <string name="action_search">Поиск</string>
 
     <string name="menu_item_add_contact">Добавить контакт</string>
+
     <string name="birth_day">День рождения</string>
 
     <!-- месяцы -->

@@ -1,6 +1,9 @@
 package com.lowek.che.bdayhelper;
 
+import android.content.Intent;
 import android.content.res.Resources;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lowek.che.bdayhelper.adapter.TabsPagerFragmentAdapter;
 import com.lowek.che.bdayhelper.support_classes.WorkaroundTabLayoutOnPageChangeListener;
@@ -18,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_main;
     public static Resources applicationResources;
 
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private ViewPager viewPager;
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
+    private ViewPager mViewPager;
+    private int mCurrentDrawerPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,52 +38,74 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         initTabLayout();
 
+        mCurrentDrawerPosition = 0;
+
         applicationResources = getResources();
     }
 
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.app_name);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 return false;
             }
         });
-        toolbar.inflateMenu(R.menu.menu);
+        mToolbar.inflateMenu(R.menu.menu);
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
     }
 
     private void initNavigationView() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (toolbar != null){
+        if (mToolbar != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationIcon(R.drawable.ic_menu);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            mToolbar.setNavigationIcon(R.drawable.ic_menu);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    drawerLayout.openDrawer(GravityCompat.START);
+                    mDrawerLayout.openDrawer(GravityCompat.START);
 
                 }
             });
         }
+
+        NavigationView view = (NavigationView) findViewById(R.id.navigationView);
+        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                menuItem.setChecked(true);
+                mDrawerLayout.closeDrawers();
+
+                switch (menuItem.getItemId()){
+                    case R.id.drawerMenuAddContact:
+                        Intent intent = new Intent(mViewPager.getContext(), AddContactActivity.class);
+                        startActivity(intent);
+                        return true;
+                }
+                return true;
+            }
+        });
     }
 
     private void initTabLayout() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
         TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
+        mViewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(mViewPager);
 
-        viewPager.clearOnPageChangeListeners();
-        viewPager.addOnPageChangeListener(new WorkaroundTabLayoutOnPageChangeListener(tabLayout));
+        mViewPager.clearOnPageChangeListeners();
+        mViewPager.addOnPageChangeListener(new WorkaroundTabLayoutOnPageChangeListener(tabLayout));
     }
+
+
+
 
 }

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">BDayHelper Beta</string>
+
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_add_contact">Add contact</string>
 
     <string name="action_search">Search</string>
 
     <string name="menu_item_add_contact">Add contact</string>
+
     <string name="birth_day">Birthday</string>
 
     <!-- months -->
@@ -38,4 +41,8 @@
     <string name="day">day</string>
     <string name="days">days</string>
     <string name="days2">days</string>
+
+
+
+
 </resources>

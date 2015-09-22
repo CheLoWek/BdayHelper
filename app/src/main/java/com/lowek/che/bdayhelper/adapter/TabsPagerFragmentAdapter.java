@@ -37,7 +37,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
             case 1:
                 return ExampleFragment.getInstance();
             case 2:
-                return ExampleFragment.getInstance();
+                return RecyclerviewFragment.getInstance();
         }
 
         return null;

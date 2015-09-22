@@ -1,17 +1,24 @@
 package com.lowek.che.bdayhelper.fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.lowek.che.bdayhelper.AddContactActivity;
+import com.lowek.che.bdayhelper.MainActivity;
 import com.lowek.che.bdayhelper.R;
 import com.lowek.che.bdayhelper.adapter.CardAdapter;
 
@@ -49,6 +56,21 @@ public class RecyclerviewFragment extends Fragment {
         adapter = new CardAdapter();
         recyclerView.setAdapter(adapter);
 
+        fab = (FloatingActionButton) view.findViewById(R.id.events_list_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //fab clicked
+//                Toast.makeText(getActivity(), "FAB CLICKED", Toast.LENGTH_SHORT).show();
+                openAddContactActivity();
+            }
+
+            private void openAddContactActivity() {
+                Intent intent = new Intent(getActivity(), AddContactActivity.class);
+                startActivity(intent);
+            }
+        });
+
 //        fab = (FloatingActionButton) view.findViewById(R.id.events_list_fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -63,4 +85,35 @@ public class RecyclerviewFragment extends Fragment {
 //        });
         return view;
     }
+
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        dbHelper = new DBHelper(getActivity());
+//    }
+
+//    class DBHelper extends SQLiteOpenHelper {
+//
+//        public DBHelper(Context context) {
+//            super(context, "bday_helper_db", null, 1);
+//        }
+//
+//        @Override
+//        public void onCreate(SQLiteDatabase db) {
+//            Log.d("DATABASE LW", "----------CREATING DATABSE----------");
+//            db.execSQL("create table contacts_info " +
+//                    "(" +
+//                    "id integer primary key autoincrement," +
+//                    "name text," +
+//                    "surname text," +
+//                    "birthdate text," +
+//                    ");");
+//        }
+//
+//        @Override
+//        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//
+//        }
+//    }
 }

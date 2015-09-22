@@ -11,4 +11,11 @@
         <item name="colorControlNormal">@color/colorWhite</item>
     </style>
 
+    <style name="AppNoDrawer" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+    </style>
 </resources>
