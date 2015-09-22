@@ -5,6 +5,7 @@
     <string name="title_activity_add_contact">Add contact</string>
 
     <string name="action_search">Search</string>
+    <string name="action_save">Save</string>
 
     <string name="menu_item_add_contact">Add contact</string>
 
@@ -42,7 +43,9 @@
     <string name="days">days</string>
     <string name="days2">days</string>
 
-
+    <string name="hint_name_surname">Name Surname</string>
+    <string name="hint_birthday">18.11.1993</string>
+    <string name="hint_phone">+375296677342</string>
 
 
 </resources>

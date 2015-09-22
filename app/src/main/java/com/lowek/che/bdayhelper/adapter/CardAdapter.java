@@ -62,7 +62,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
             viewHolder.imgPresentIdea.setImageResource(R.drawable.present_unchecked);
         }
 
-        viewHolder.tvFirstLastName.setText(contact.getFirstName() + " " + contact.getLastName());
+        viewHolder.tvFirstLastName.setText(contact.getName() + " " + contact.getLastName());
         viewHolder.tvEvent.setText(R.string.birth_day);
 
         viewHolder.tvEventDate.setText(DateMethods.getStringDateMonth(contact.getBirthDate(), MainActivity.applicationResources.getStringArray(R.array.months)));

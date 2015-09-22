@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Contact {
 
-    private String firstName;
+    private String name;
     private String lastName;
     private int picture;
     private Calendar birthDate;
@@ -12,8 +12,8 @@ public class Contact {
     private boolean haspresentIdea;
     private boolean hasPresent;
 
-    public Contact(String firstName, String lastName, int picture, Calendar birthDate, String presentIdea){
-        this.firstName = firstName;
+    public Contact(String name, String lastName, int picture, Calendar birthDate, String presentIdea){
+        this.name = name;
         this.lastName = lastName;
         this.picture = picture;
         this.birthDate = birthDate;
@@ -51,12 +51,12 @@ public class Contact {
         this.hasPresent = hasPresent;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastName() {

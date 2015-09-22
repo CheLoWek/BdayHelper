@@ -6,6 +6,7 @@
     <string name="title_activity_add_contact">Добавить контакт</string>
 
     <string name="action_search">Поиск</string>
+    <string name="action_save">Сохранить</string>
 
     <string name="menu_item_add_contact">Добавить контакт</string>
 
@@ -42,4 +43,8 @@
     <string name="day">день</string>
     <string name="days">дней</string>
     <string name="days2">дня</string>
+
+    <string name="hint_name_surname">Имя Фамилия</string>
+    <string name="hint_birthday">18.11.1993</string>
+    <string name="hint_phone">+375296677342</string>
 </resources>

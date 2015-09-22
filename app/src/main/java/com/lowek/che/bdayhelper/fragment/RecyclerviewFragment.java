@@ -60,7 +60,7 @@ public class RecyclerviewFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //fab clicked
+                //fab_add clicked
 //                Toast.makeText(getActivity(), "FAB CLICKED", Toast.LENGTH_SHORT).show();
                 openAddContactActivity();
             }
@@ -71,11 +71,11 @@ public class RecyclerviewFragment extends Fragment {
             }
         });
 
-//        fab = (FloatingActionButton) view.findViewById(R.id.events_list_fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
+//        fab_add = (FloatingActionButton) view.findViewById(R.id.events_list_fab);
+//        fab_add.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                //fab clicked
+//                //fab_add clicked
 //                getActivity().getSupportFragmentManager().beginTransaction()
 //                        .replace(R.id., new RecyclerviewFragment())
 //                        .addToBackStack(null)
@@ -85,35 +85,4 @@ public class RecyclerviewFragment extends Fragment {
 //        });
         return view;
     }
-
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        dbHelper = new DBHelper(getActivity());
-//    }
-
-//    class DBHelper extends SQLiteOpenHelper {
-//
-//        public DBHelper(Context context) {
-//            super(context, "bday_helper_db", null, 1);
-//        }
-//
-//        @Override
-//        public void onCreate(SQLiteDatabase db) {
-//            Log.d("DATABASE LW", "----------CREATING DATABSE----------");
-//            db.execSQL("create table contacts_info " +
-//                    "(" +
-//                    "id integer primary key autoincrement," +
-//                    "name text," +
-//                    "surname text," +
-//                    "birthdate text," +
-//                    ");");
-//        }
-//
-//        @Override
-//        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//
-//        }
-//    }
 }
