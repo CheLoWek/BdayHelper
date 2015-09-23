@@ -1,25 +1,41 @@
 package com.lowek.che.bdayhelper;
 
+import com.lowek.che.bdayhelper.support_classes.DateMethods;
+
 import java.util.Calendar;
 
-public class Contact {
+public class Contact implements Comparable<Contact> {
 
     private String name;
     private String lastName;
     private int picture;
     private Calendar birthDate;
+    private Calendar nextBirthday;
+    private int daysLeft;
     private String presentIdea;
     private boolean haspresentIdea;
     private boolean hasPresent;
 
-    public Contact(String name, String lastName, int picture, Calendar birthDate, String presentIdea){
+    public Calendar getNextBirthday() {
+        return nextBirthday;
+    }
+
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
+    public Contact(String name, String lastName, int picture, Calendar birthDate, String presentIdea) {
         this.name = name;
         this.lastName = lastName;
         this.picture = picture;
         this.birthDate = birthDate;
+
+        nextBirthday = DateMethods.nextBirthday(this.getBirthDate());
+        daysLeft = DateMethods.getDaysDifference(Calendar.getInstance(), DateMethods.nextBirthday(this.nextBirthday));
+
         this.presentIdea = presentIdea;
 
-        if (!this.presentIdea.equals("")){
+        if (!this.presentIdea.equals("")) {
             haspresentIdea = true;
         }
     }
@@ -30,7 +46,7 @@ public class Contact {
 
     public void setPresentIdea(String presentIdea) {
         this.presentIdea = presentIdea;
-        if (!this.presentIdea.equals("")){
+        if (!this.presentIdea.equals("")) {
             haspresentIdea = true;
         }
     }
@@ -81,6 +97,10 @@ public class Contact {
 
     public void setBirthDate(Calendar birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public int compareTo(Contact other) {
+        return getDaysLeft() - other.getDaysLeft();
     }
 
 }

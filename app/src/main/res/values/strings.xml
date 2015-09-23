@@ -43,7 +43,8 @@
     <string name="days">days</string>
     <string name="days2">days</string>
 
-    <string name="hint_name_surname">Name Surname</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_surname">Surname</string>
     <string name="hint_birthday">18.11.1993</string>
     <string name="hint_phone">+375296677342</string>
 

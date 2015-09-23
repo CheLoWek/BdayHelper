@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <include layout="@layout/fab"
+    <include layout="@layout/fab_add"
         android:id="@+id/events_list_fab"/>
 
 </RelativeLayout>

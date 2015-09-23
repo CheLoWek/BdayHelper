@@ -14,20 +14,19 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public TabsPagerFragmentAdapter(FragmentManager fm) {
         super(fm);
         tabs = new String[]{
-                "ALL",
-                "VK",
-                "FACEBOOK"
-//                "tab1",
-//                "tab2",
-//                "tab3",
-//                "tab4"
+                "all",
+                "vk",
+                "facebook",
+                "gmail"
         };
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         return tabs[position];
+//        return null;
     }
+
 
     @Override
     public Fragment getItem(int position) {
@@ -37,6 +36,14 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
             case 1:
                 return ExampleFragment.getInstance();
             case 2:
+                return RecyclerviewFragment.getInstance();
+            case 3:
+                return RecyclerviewFragment.getInstance();
+            case 4:
+                return RecyclerviewFragment.getInstance();
+            case 5:
+                return RecyclerviewFragment.getInstance();
+            case 6:
                 return RecyclerviewFragment.getInstance();
         }
 

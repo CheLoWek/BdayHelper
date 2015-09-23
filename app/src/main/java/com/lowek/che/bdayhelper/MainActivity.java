@@ -2,6 +2,8 @@ package com.lowek.che.bdayhelper;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -11,11 +13,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.lowek.che.bdayhelper.adapter.TabsPagerFragmentAdapter;
+import com.lowek.che.bdayhelper.database.DBHelper;
+import com.lowek.che.bdayhelper.support_classes.DatabaseMethods;
 import com.lowek.che.bdayhelper.support_classes.WorkaroundTabLayoutOnPageChangeListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private ViewPager mViewPager;
-    private int mCurrentDrawerPosition;
+
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +44,8 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         initTabLayout();
 
-        mCurrentDrawerPosition = 0;
-
         applicationResources = getResources();
     }
-
 
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,12 +79,13 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView view = (NavigationView) findViewById(R.id.navigationView);
         view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
 
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.drawerMenuAddContact:
                         Intent intent = new Intent(mViewPager.getContext(), AddContactActivity.class);
                         startActivity(intent);
@@ -103,9 +107,16 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.clearOnPageChangeListeners();
         mViewPager.addOnPageChangeListener(new WorkaroundTabLayoutOnPageChangeListener(tabLayout));
+
+        try{
+            tabLayout.getTabAt(0).setIcon(R.drawable.ic_account_multiple);
+            tabLayout.getTabAt(1).setIcon(R.drawable.ic_vk);
+            tabLayout.getTabAt(2).setIcon(R.drawable.ic_facebook);
+            tabLayout.getTabAt(3).setIcon(R.drawable.ic_google_plus);
+        }catch (NullPointerException e){
+            Log.d("LW", "MainActivity - set icon to tabs");
+        }
+
     }
-
-
-
 
 }
