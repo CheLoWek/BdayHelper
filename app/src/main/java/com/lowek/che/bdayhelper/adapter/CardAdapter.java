@@ -3,6 +3,9 @@ package com.lowek.che.bdayhelper.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lowek.che.bdayhelper.Contact;
 import com.lowek.che.bdayhelper.MainActivity;
@@ -18,6 +22,7 @@ import com.lowek.che.bdayhelper.database.DBHelper;
 import com.lowek.che.bdayhelper.support_classes.DatabaseMethods;
 import com.lowek.che.bdayhelper.support_classes.DateMethods;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +39,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     public CardAdapter(Context context) {
         super();
-
         DBHelper dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor allContacts = DatabaseMethods.getDataNoSort(db, "bdayhelper_contacts");
@@ -49,15 +53,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 int surnameColIndex = allContacts.getColumnIndex("surname");
                 String surname = allContacts.getString(surnameColIndex);
 
+                String picturePath = "";
+
                 int birthdayColIndex = allContacts.getColumnIndex("birthday");
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
                 Calendar birthday = Calendar.getInstance();
-                try{
+                try {
                     Date date = df.parse(allContacts.getString(birthdayColIndex));
                     birthday.setTime(date);
-                } catch (ParseException e){
+                } catch (ParseException e) {
                     Log.d("CardAdapter", "Error trying to parse string to date");
                 }
+
 
                 int presentColIndex = allContacts.getColumnIndex("present");
                 String present = allContacts.getString(presentColIndex);
@@ -66,7 +73,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
                 Contact contact = new Contact(name,
                         surname,
-                        R.drawable.user_image_default,
+                        picturePath,
                         birthday,
                         present);
                 contacts.add(contact);
@@ -92,8 +99,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Contact contact = contacts.get(i);
 
-        viewHolder.imgContactPicture.setImageResource(contact.getPicture());
-
         if (contact.isHaspresentIdea()) {
             viewHolder.imgPresentIdea.setImageResource(R.drawable.present_checked);
         } else {
@@ -101,13 +106,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         }
 
         viewHolder.tvFirstLastName.setText(contact.getName() + " " + contact.getLastName());
+
+        viewHolder.imgContactPicture.setImageResource(R.drawable.user_image_default);
+
         viewHolder.tvEvent.setText(R.string.birth_day);
 
         viewHolder.tvEventDate.setText(DateMethods.getStringDateMonth(contact.getBirthDate(), MainActivity.applicationResources.getStringArray(R.array.months)));
 
         // определить окончание для русского языка
-//        int daysLeft = DateMethods.getDaysDifference(Calendar.getInstance(), DateMethods.nextBirthday(contact.getBirthDate()));
-//        int lastDigit = daysLeft % 10;
         int lastDigit = contact.getDaysLeft() % 10;
         String days = "";
         if (lastDigit == 2 || lastDigit == 3 || lastDigit == 4) {

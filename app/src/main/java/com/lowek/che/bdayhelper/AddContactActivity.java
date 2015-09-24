@@ -3,29 +3,37 @@ package com.lowek.che.bdayhelper;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lowek.che.bdayhelper.database.DBHelper;
 
-public class AddContactActivity extends AppCompatActivity{
+public class AddContactActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_add_contact;
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private FrameLayout content;
+    private ImageView userImage;
+    private Uri imageURI;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,10 +44,10 @@ public class AddContactActivity extends AppCompatActivity{
         setContentView(LAYOUT);
 
         content = (FrameLayout) findViewById(R.id.add_contact_content);
+        userImage = (ImageView) findViewById(R.id.user_image);
 
         initToolbar();
         initFAB();
-
     }
 
     private void initFAB() {
@@ -48,14 +56,27 @@ public class AddContactActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 //fab_add clicked
-                Toast.makeText(v.getContext(), "FAB CLICKED", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "FAB CLICKED", Toast.LENGTH_SHORT).show();
                 setContactPicture();
             }
 
             private void setContactPicture() {
-
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent.createChooser(intent, "Select picture"), 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == 1) {
+            userImage.setImageURI(data.getData());
+            imageURI = data.getData();
+        }
     }
 
     private void initToolbar() {
@@ -87,7 +108,24 @@ public class AddContactActivity extends AppCompatActivity{
         }
     }
 
-    public void saveContact(){
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        //This method was deprecated in API level 11
+        //Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+
+        CursorLoader cursorLoader = new CursorLoader(
+                this,
+                contentUri, proj, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+
+        int column_index =
+                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public void saveContact() {
         DBHelper dbHelper = new DBHelper(this);
 
         ContentValues cv = new ContentValues();
@@ -98,9 +136,11 @@ public class AddContactActivity extends AppCompatActivity{
         EditText etPhone = (EditText) findViewById(R.id.etPhone);
 
         String name = etName.getText().toString();
-        String surname =etSurname.getText().toString();
-        String birthday =etBirthday.getText().toString();
-        String phone =etPhone.getText().toString();
+        String surname = etSurname.getText().toString();
+        String birthday = etBirthday.getText().toString();
+
+
+        String phone = etPhone.getText().toString();
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -108,8 +148,11 @@ public class AddContactActivity extends AppCompatActivity{
         cv.put("surname", surname);
         cv.put("birthday", birthday);
         //picture
+//        cv.put("picture", picture);
+
         cv.put("phone", phone);
         cv.put("origin", "user");
+
 
         long rowID = db.insert("bdayhelper_contacts", null, cv);
     }

@@ -8,7 +8,7 @@ public class Contact implements Comparable<Contact> {
 
     private String name;
     private String lastName;
-    private int picture;
+    private String picturePath;
     private Calendar birthDate;
     private Calendar nextBirthday;
     private int daysLeft;
@@ -24,10 +24,10 @@ public class Contact implements Comparable<Contact> {
         return daysLeft;
     }
 
-    public Contact(String name, String lastName, int picture, Calendar birthDate, String presentIdea) {
+    public Contact(String name, String lastName, String picturePath, Calendar birthDate, String presentIdea) {
         this.name = name;
         this.lastName = lastName;
-        this.picture = picture;
+        this.picturePath = picturePath;
         this.birthDate = birthDate;
 
         nextBirthday = DateMethods.nextBirthday(this.getBirthDate());
@@ -83,12 +83,12 @@ public class Contact implements Comparable<Contact> {
         this.lastName = lastName;
     }
 
-    public int getPicture() {
-        return picture;
+    public String getPicturePath() {
+        return picturePath;
     }
 
-    public void setPicture(int picture) {
-        this.picture = picture;
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 
     public Calendar getBirthDate() {
