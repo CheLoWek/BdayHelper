@@ -2,10 +2,7 @@ package com.lowek.che.bdayhelper;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -16,12 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.lowek.che.bdayhelper.adapter.TabsPagerFragmentAdapter;
 import com.lowek.che.bdayhelper.database.DBHelper;
-import com.lowek.che.bdayhelper.support_classes.DatabaseMethods;
-import com.lowek.che.bdayhelper.support_classes.WorkaroundTabLayoutOnPageChangeListener;
+import com.lowek.che.bdayhelper.utils.WorkaroundTabLayoutOnPageChangeListener;
 
 public class MainActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_main;

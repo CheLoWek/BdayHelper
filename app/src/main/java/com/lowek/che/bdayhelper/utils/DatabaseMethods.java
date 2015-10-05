@@ -1,9 +1,7 @@
-package com.lowek.che.bdayhelper.support_classes;
+package com.lowek.che.bdayhelper.utils;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.lowek.che.bdayhelper.database.DBHelper;
 
 public class DatabaseMethods {
 

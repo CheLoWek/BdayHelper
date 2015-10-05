@@ -1,4 +1,4 @@
-package com.lowek.che.bdayhelper.support_classes;
+package com.lowek.che.bdayhelper.utils;
 
 import android.support.design.widget.TabLayout;
 import java.lang.ref.WeakReference;

@@ -1,4 +1,4 @@
-package com.lowek.che.bdayhelper.support_classes;
+package com.lowek.che.bdayhelper.utils;
 
 //import com.lilywei.che.bdayhelper_v1.MainActivity;
 //import com.lilywei.che.bdayhelper_v1.R;

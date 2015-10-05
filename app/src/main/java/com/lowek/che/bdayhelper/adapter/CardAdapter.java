@@ -3,9 +3,6 @@ package com.lowek.che.bdayhelper.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,16 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lowek.che.bdayhelper.Contact;
 import com.lowek.che.bdayhelper.MainActivity;
 import com.lowek.che.bdayhelper.R;
 import com.lowek.che.bdayhelper.database.DBHelper;
-import com.lowek.che.bdayhelper.support_classes.DatabaseMethods;
-import com.lowek.che.bdayhelper.support_classes.DateMethods;
+import com.lowek.che.bdayhelper.utils.DatabaseMethods;
+import com.lowek.che.bdayhelper.utils.DateMethods;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {

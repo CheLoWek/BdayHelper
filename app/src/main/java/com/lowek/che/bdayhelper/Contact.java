@@ -1,6 +1,6 @@
 package com.lowek.che.bdayhelper;
 
-import com.lowek.che.bdayhelper.support_classes.DateMethods;
+import com.lowek.che.bdayhelper.utils.DateMethods;
 
 import java.util.Calendar;
 
