@@ -1,9 +1,15 @@
 package com.lowek.che.bdayhelper;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -11,12 +17,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.lowek.che.bdayhelper.adapter.TabsPagerFragmentAdapter;
 import com.lowek.che.bdayhelper.database.DBHelper;
+import com.lowek.che.bdayhelper.receiver.AlarmReceiver;
+import com.lowek.che.bdayhelper.service.NotificationService;
 import com.lowek.che.bdayhelper.utils.WorkaroundTabLayoutOnPageChangeListener;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_main;
@@ -27,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private DBHelper dbHelper;
+
+
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         initTabLayout();
 
         applicationResources = getResources();
+
+        startNotifications();
+
+
     }
 
     private void initToolbar() {
@@ -59,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private void initNavigationView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (mToolbar != null){
+        if (mToolbar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mToolbar.setNavigationIcon(R.drawable.ic_menu);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -103,15 +121,32 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.clearOnPageChangeListeners();
         mViewPager.addOnPageChangeListener(new WorkaroundTabLayoutOnPageChangeListener(tabLayout));
 
-        try{
+        try {
             tabLayout.getTabAt(0).setIcon(R.drawable.ic_account_multiple);
             tabLayout.getTabAt(1).setIcon(R.drawable.ic_vk);
             tabLayout.getTabAt(2).setIcon(R.drawable.ic_facebook);
             tabLayout.getTabAt(3).setIcon(R.drawable.ic_google_plus);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Log.d("LW", "MainActivity - set icon to tabs");
         }
 
     }
+
+    private void startNotifications() {
+        Intent myIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0); // first time
+        long frequency = 24 * 60 * 60 * 1000; // in ms
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);
+    }
+
+
 
 }
