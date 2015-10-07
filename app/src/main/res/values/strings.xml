@@ -42,6 +42,8 @@
     <string name="day">day</string>
     <string name="days">days</string>
     <string name="days2">days</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
 
     <string name="hint_name">Name</string>
     <string name="hint_surname">Surname</string>

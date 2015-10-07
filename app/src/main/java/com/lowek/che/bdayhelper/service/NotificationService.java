@@ -4,14 +4,29 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.lowek.che.bdayhelper.Contact;
 import com.lowek.che.bdayhelper.MainActivity;
 import com.lowek.che.bdayhelper.R;
+import com.lowek.che.bdayhelper.database.DBHelper;
+import com.lowek.che.bdayhelper.utils.DatabaseMethods;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class NotificationService extends Service{
@@ -47,7 +62,69 @@ public class NotificationService extends Service{
     private void someTask() {
 //        Toast.makeText(this, "HAHA", Toast.LENGTH_LONG).show();
         // проверка, есть ли именинники и вывод их
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor allContacts = getData();
+                List<Contact> contacts = getContactsList(allContacts);
+                allContacts.close();
 
+                Iterator iterator = contacts.iterator();
+                while(iterator.hasNext()){
+                    Contact current = (Contact) iterator.next();
+
+                }
+            }
+        });
+    }
+
+    private Cursor getData(){
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor allInformation = DatabaseMethods.getDataNoSort(db, "bdayhelper_contacts");
+        Log.d("Service", "getData");
+        return allInformation;
+    }
+
+    private List<Contact> getContactsList(Cursor data){
+        List<Contact> contacts = new ArrayList<Contact>();
+        if (data.moveToFirst()) {
+            do {
+                int nameColIndex = data.getColumnIndex("name");
+                String name = data.getString(nameColIndex);
+
+                int surnameColIndex = data.getColumnIndex("surname");
+                String surname = data.getString(surnameColIndex);
+
+                String picturePath = "";
+
+                int birthdayColIndex = data.getColumnIndex("birthday");
+                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                Calendar birthday = Calendar.getInstance();
+                try {
+                    Date date = df.parse(data.getString(birthdayColIndex));
+                    birthday.setTime(date);
+                } catch (ParseException e) {
+                    Log.d("CardAdapter", "Error trying to parse string to date");
+                }
+
+                int presentColIndex = data.getColumnIndex("present");
+                String present = data.getString(presentColIndex);
+                if (present == null)
+                    present = "";
+
+                Contact contact = new Contact(name,
+                        surname,
+                        picturePath,
+                        birthday,
+                        present);
+                contacts.add(contact);
+            } while (data.moveToNext());
+        }
+
+        Collections.sort(contacts);
+        Log.d("Service", "making contact list");
+        return contacts;
     }
 
     private void showNotification(String title, String text) {

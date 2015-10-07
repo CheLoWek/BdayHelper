@@ -1,5 +1,7 @@
 package com.lowek.che.bdayhelper;
 
+import android.util.Log;
+
 import com.lowek.che.bdayhelper.utils.DateMethods;
 
 import java.util.Calendar;
@@ -31,8 +33,8 @@ public class Contact implements Comparable<Contact> {
         this.birthDate = birthDate;
 
         nextBirthday = DateMethods.nextBirthday(this.getBirthDate());
-        daysLeft = DateMethods.getDaysDifference(Calendar.getInstance(), DateMethods.nextBirthday(this.nextBirthday));
-
+        daysLeft = DateMethods.getDaysDifference(Calendar.getInstance(), nextBirthday);
+//        Log.d("DaysLeft", daysLeft + "");
         this.presentIdea = presentIdea;
 
         if (!this.presentIdea.equals("")) {

@@ -115,8 +115,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         } else {
             days = MainActivity.applicationResources.getString(R.string.days);
         }
-        viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.in) + " " + contact.getDaysLeft() + " " + days);
-
+        if (contact.getDaysLeft() == 0){
+            viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.today));
+        } else if (contact.getDaysLeft() == 1){
+            viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.tomorrow));
+        } else {
+            viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.in) + " " + contact.getDaysLeft() + " " + days);
+        }
 //        Calendar nextBDay = DateMethods.nextBirthday(contact.getBirthDate());
         viewHolder.tvDay.setText(DateMethods.getDayOfWeek(contact.getNextBirthday(), MainActivity.applicationResources.getStringArray(R.array.days_of_week)));
 //        viewHolder.tvDay.setText(DateMethods.getDayOfWeek(nextBDay, MainActivity.applicationResources.getStringArray(R.array.days_of_week)));

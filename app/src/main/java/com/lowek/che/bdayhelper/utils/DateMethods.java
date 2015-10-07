@@ -3,6 +3,8 @@ package com.lowek.che.bdayhelper.utils;
 //import com.lilywei.che.bdayhelper_v1.MainActivity;
 //import com.lilywei.che.bdayhelper_v1.R;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -23,9 +25,21 @@ public class DateMethods {
         if (date1 == null || date2 == null)
             return 0;
 
-        // + 1 is because I want to count current day too. day X is not included
-        return (int) ((date2.getTimeInMillis() - date1.getTimeInMillis()) / (1000 * 60 * 60 * 24) + 1);
+        String stringDate1 = getStringDate(date1);
+        String stringDate2 = getStringDate(date2);
+        Log.d("1", "date1: " + stringDate1 + "   date2: " + stringDate2);
+        if (date1.after(date2)){
+            if (stringDate1.equals(stringDate2)){
+                return 0;
+            }
+            return -1;
+        }
+
+        int result = (int) ((date2.getTimeInMillis() - date1.getTimeInMillis()) / (1000 * 60 * 60 * 24));
+        result++;
+        return result;
     }
+
 
     public static Calendar nextBirthday(Calendar date) {
         Calendar today = Calendar.getInstance();
@@ -36,9 +50,14 @@ public class DateMethods {
         // check
         if (getDaysDifference(today, next) < 0) {
             next = new GregorianCalendar(today.get(Calendar.YEAR) + 1, date.get(Calendar.MONTH), date.get(Calendar.DATE));
-        }
 
+        }
+        Log.d("3 next", getStringDate(next));
         return next;
+    }
+
+    public static String getStringDate(Calendar date){
+        return date.get(Calendar.DATE) + "." + date.get(Calendar.MONTH) + "." + date.get(Calendar.YEAR);
     }
 
     public static String getDayOfWeek(Calendar date, String[] days_of_week) {
