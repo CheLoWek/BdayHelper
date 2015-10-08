@@ -31,7 +31,7 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 
-public class NotificationService extends Service{
+public class NotificationService extends Service {
 
     final String LOG_TAG = "myLogs";
 
@@ -61,45 +61,31 @@ public class NotificationService extends Service{
         return null;
     }
 
-    private void newThread(){
-        Runnable r = new Runnable() {
+    private void someTask() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(NotificationService.this, " Service thread is Running",
-                        Toast.LENGTH_SHORT).show();
+                Cursor allContacts = getData();
+                List<Contact> contacts = getContactsList(allContacts);
+                allContacts.close();
+
+
+                Iterator iterator = contacts.iterator();
+                while (iterator.hasNext()) {
+                    Contact current = (Contact) iterator.next();
+
+                    if (current.getDaysLeft() == 0) {
+                        String contactName = current.getName() + " " + current.getLastName();
+                        showNotification(contactName, "Has a birthday today!");
+                    }
+                }
                 stopSelf();
             }
-        };
-        Thread t = new Thread(r);
-        t.start();
+        }).start();
+
     }
 
-    private void someTask() {
-        Log.d("Heeeey", "in");
-        Cursor allContacts = getData();
-        List<Contact> contacts = getContactsList(allContacts);
-        allContacts.close();
-
-
-
-        Iterator iterator = contacts.iterator();
-        while(iterator.hasNext()){
-            Contact current = (Contact) iterator.next();
-
-            Log.d("Contact info", current.getContactInformation());
-
-            if (current.getDaysLeft() == 0){
-                String contactName = current.getName() + " " + current.getLastName();
-                showNotification(contactName, "Has a birthday today!");
-            }
-        }
-
-        newThread();
-
-        Log.d("Heeeey", "out 2");
-    }
-
-    private Cursor getData(){
+    private Cursor getData() {
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor allInformation = DatabaseMethods.getDataNoSort(db, "bdayhelper_contacts");
@@ -107,7 +93,7 @@ public class NotificationService extends Service{
         return allInformation;
     }
 
-    private List<Contact> getContactsList(Cursor data){
+    private List<Contact> getContactsList(Cursor data) {
         List<Contact> contacts = new ArrayList<Contact>();
         if (data.moveToFirst()) {
             do {

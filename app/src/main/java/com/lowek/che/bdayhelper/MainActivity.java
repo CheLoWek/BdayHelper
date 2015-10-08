@@ -140,9 +140,10 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-        calendar.set(Calendar.HOUR_OF_DAY, 3);
-        calendar.set(Calendar.MINUTE, 52);
-        calendar.set(Calendar.SECOND, 0); // first time
+//        calendar.set(Calendar.HOUR_OF_DAY, 4);
+//        calendar.set(Calendar.MINUTE, 05);
+//        calendar.set(Calendar.SECOND, 30); // first time
+        calendar.add(Calendar.SECOND, 5);
         long frequency = 24 * 60 * 60 * 1000; // in ms
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);
     }
