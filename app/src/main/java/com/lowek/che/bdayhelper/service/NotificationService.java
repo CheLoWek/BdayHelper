@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 
 public class NotificationService extends Service{
@@ -59,23 +61,42 @@ public class NotificationService extends Service{
         return null;
     }
 
-    private void someTask() {
-//        Toast.makeText(this, "HAHA", Toast.LENGTH_LONG).show();
-        // проверка, есть ли именинники и вывод их
-        new Thread(new Runnable() {
+    private void newThread(){
+        Runnable r = new Runnable() {
             @Override
             public void run() {
-                Cursor allContacts = getData();
-                List<Contact> contacts = getContactsList(allContacts);
-                allContacts.close();
-
-                Iterator iterator = contacts.iterator();
-                while(iterator.hasNext()){
-                    Contact current = (Contact) iterator.next();
-
-                }
+                Toast.makeText(NotificationService.this, " Service thread is Running",
+                        Toast.LENGTH_SHORT).show();
+                stopSelf();
             }
-        });
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    private void someTask() {
+        Log.d("Heeeey", "in");
+        Cursor allContacts = getData();
+        List<Contact> contacts = getContactsList(allContacts);
+        allContacts.close();
+
+
+
+        Iterator iterator = contacts.iterator();
+        while(iterator.hasNext()){
+            Contact current = (Contact) iterator.next();
+
+            Log.d("Contact info", current.getContactInformation());
+
+            if (current.getDaysLeft() == 0){
+                String contactName = current.getName() + " " + current.getLastName();
+                showNotification(contactName, "Has a birthday today!");
+            }
+        }
+
+        newThread();
+
+        Log.d("Heeeey", "out 2");
     }
 
     private Cursor getData(){

@@ -1,7 +1,5 @@
 package com.lowek.che.bdayhelper.utils;
 
-//import com.lilywei.che.bdayhelper_v1.MainActivity;
-//import com.lilywei.che.bdayhelper_v1.R;
 
 import android.util.Log;
 
@@ -14,7 +12,6 @@ public class DateMethods {
         String result = "";
         result += date.get(Calendar.DATE) + " ";
         // plus month
-//        result += MainActivity.applicationResources.getStringArray(R.array.months)[date.get(Calendar.MONTH)];
         result += months[date.get(Calendar.MONTH)]; // чтобы не зависеть от mainactivity
 
         return result;

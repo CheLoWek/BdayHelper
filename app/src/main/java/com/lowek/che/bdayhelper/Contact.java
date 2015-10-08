@@ -105,4 +105,10 @@ public class Contact implements Comparable<Contact> {
         return getDaysLeft() - other.getDaysLeft();
     }
 
+    public String getContactInformation(){
+        return  getName() + " " +
+                getLastName() + " " +
+                DateMethods.getStringDate(getBirthDate()) + " " +
+                DateMethods.getStringDate(getNextBirthday());
+    }
 }
