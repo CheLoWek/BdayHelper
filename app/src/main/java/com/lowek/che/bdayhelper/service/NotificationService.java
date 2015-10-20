@@ -69,13 +69,11 @@ public class NotificationService extends Service {
                 List<Contact> contacts = getContactsList(allContacts);
                 allContacts.close();
 
+                for(Contact contact:contacts) {
 
-                Iterator iterator = contacts.iterator();
-                while (iterator.hasNext()) {
-                    Contact current = (Contact) iterator.next();
 
-                    if (current.getDaysLeft() == 0) {
-                        String contactName = current.getName() + " " + current.getLastName();
+                    if (contact.getDaysLeft() == 0) {
+                        String contactName = contact.getName() + " " + contact.getLastName();
                         showNotification(contactName, "Has a birthday today!");
                     }
                 }

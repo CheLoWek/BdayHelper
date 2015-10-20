@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         applicationResources = getResources();
 
         startNotifications();
-
-
     }
 
     private void initToolbar() {
@@ -121,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.clearOnPageChangeListeners();
         mViewPager.addOnPageChangeListener(new WorkaroundTabLayoutOnPageChangeListener(tabLayout));
 
-        try {
-            tabLayout.getTabAt(0).setIcon(R.drawable.ic_account_multiple);
-            tabLayout.getTabAt(1).setIcon(R.drawable.ic_vk);
-            tabLayout.getTabAt(2).setIcon(R.drawable.ic_facebook);
-            tabLayout.getTabAt(3).setIcon(R.drawable.ic_google_plus);
-        } catch (NullPointerException e) {
-            Log.d("LW", "MainActivity - set icon to tabs");
+
+        for(int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null) {
+                tab.setIcon(R.drawable.ic_account_multiple);
+            }
         }
+
 
     }
 
