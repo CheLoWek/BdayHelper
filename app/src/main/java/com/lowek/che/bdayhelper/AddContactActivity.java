@@ -104,6 +104,10 @@ public class AddContactActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveContact();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
                 Snackbar.make(content, "Saved", Snackbar.LENGTH_LONG).show();
                 return true;
             default:
