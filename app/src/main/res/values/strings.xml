@@ -50,5 +50,7 @@
     <string name="hint_birthday">18.11.1993</string>
     <string name="hint_phone">+375296677342</string>
 
+    <integer name="com_vk_sdk_AppId">5113636</integer>
+
 
 </resources>
