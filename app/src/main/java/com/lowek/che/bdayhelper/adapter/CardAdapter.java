@@ -3,6 +3,8 @@ package com.lowek.che.bdayhelper.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +50,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 String surname = allContacts.getString(surnameColIndex);
 
                 String picturePath = "";
+
+                int pictureColIndex = allContacts.getColumnIndex("picture");
+
+
+                try {
+                    picturePath = allContacts.getString(pictureColIndex);
+                } catch (NullPointerException e) {
+                }
+                if (picturePath == null) {
+                    picturePath = "";
+                }
 
                 int birthdayColIndex = allContacts.getColumnIndex("birthday");
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
@@ -101,7 +114,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
         viewHolder.tvFirstLastName.setText(contact.getName() + " " + contact.getLastName());
 
-        viewHolder.imgContactPicture.setImageResource(R.drawable.user_image_default);
+
+        if (contact.getPicturePath().equals("")) {
+            viewHolder.imgContactPicture.setImageResource(R.drawable.user_image_default);
+        } else {
+            viewHolder.imgContactPicture.setImageBitmap(null);
+            Bitmap bm = BitmapFactory.decodeFile(contact.getPicturePath());
+            viewHolder.imgContactPicture.setImageBitmap(bm);
+        }
+
 
         viewHolder.tvEvent.setText(R.string.birth_day);
 
@@ -115,9 +136,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         } else {
             days = MainActivity.applicationResources.getString(R.string.days);
         }
-        if (contact.getDaysLeft() == 0){
+        if (contact.getDaysLeft() == 0) {
             viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.today));
-        } else if (contact.getDaysLeft() == 1){
+        } else if (contact.getDaysLeft() == 1) {
             viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.tomorrow));
         } else {
             viewHolder.tvDaysLeft.setText(MainActivity.applicationResources.getString(R.string.in) + " " + contact.getDaysLeft() + " " + days);

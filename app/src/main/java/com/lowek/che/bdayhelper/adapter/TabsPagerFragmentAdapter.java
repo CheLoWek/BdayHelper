@@ -19,6 +19,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
                 "facebook",
                 "gmail"
         };
+
     }
 
     @Override

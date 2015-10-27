@@ -15,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -76,6 +77,8 @@ public class AddContactActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 1) {
             userImage.setImageURI(data.getData());
             imageURI = data.getData();
+        } else {
+
         }
     }
 
@@ -109,7 +112,7 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
 
         //This method was deprecated in API level 11
         //Cursor cursor = managedQuery(contentUri, proj, null, null, null);
@@ -137,6 +140,11 @@ public class AddContactActivity extends AppCompatActivity {
 
         String name = etName.getText().toString();
         String surname = etSurname.getText().toString();
+
+        String picturePath = "";
+        if (imageURI != null) {
+            picturePath = getRealPathFromURI(imageURI);
+        }
         String birthday = etBirthday.getText().toString();
 
 
@@ -148,7 +156,7 @@ public class AddContactActivity extends AppCompatActivity {
         cv.put("surname", surname);
         cv.put("birthday", birthday);
         //picture
-//        cv.put("picture", picture);
+        cv.put("picture", picturePath);
 
         cv.put("phone", phone);
         cv.put("origin", "user");
